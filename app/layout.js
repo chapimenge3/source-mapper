@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
+import Loglib from "@loglib/tracker/react";
 
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -18,6 +19,11 @@ export default function RootLayout({ children }) {
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
         {children}
         <Toaster />
+        <Loglib
+          config={{
+            id: "sourcemap",
+          }}
+        />
       </body>
     </html>
   );
