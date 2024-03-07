@@ -21,7 +21,12 @@ export default function Home() {
   const parseFilesFromSourceMap = (sourceMaps) => {
     const files = []
     for (let i = 0; i < sourceMaps.length; i++) {
-      const content = JSON.parse(sourceMaps[i])
+      let content;
+      if (typeof sourceMaps[i] === 'string') {
+        content = JSON.parse(sourceMaps[i])
+      } else {
+        content = sourceMaps[i]
+      }
       const sources = content.sources
       const sourcesContent = content.sourcesContent
 
@@ -46,6 +51,7 @@ export default function Home() {
 
     // this will contains the source code and the file name
     // {file: 'File name', content: 'File content'}
+    console.log('Source code', sourceCode)
     const files = parseFilesFromSourceMap(sourceCode)
 
     // log all file names
@@ -79,9 +85,7 @@ export default function Home() {
     console.log('Generating source code')
     var files = []
     try {
-      console.log('isMappingFile', isMappingFile(input))
       if (!isMappingFile(input)) {
-
         const allSourceMaps = await getAllSourceMaps(input)
         toast({
           title: "Source Code",
