@@ -6,32 +6,20 @@ import { TextArea } from "@/components/TextArea";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react"
 import { getAllSourceMaps, getWebPageContent } from "@/lib/actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+import TermOfService from "@/components/TermsOfService";
 
 
 export default function Home() {
   const { toast } = useToast()
+  const [userAgreement, setUserAgreement] = useState(false)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
 
   const parseFilesFromSourceMap = (sourceMaps) => {
     const files = []
-    // sourceMaps.forEach((sourceMap) => {
-    //   const content = JSON.parse(sourceMap)
-    //   const sources = content.sources
-    //   const sourcesContent = content.sourcesContent
-
-    //   sources.forEach((source, index) => {
-    //     // ignores node_modules or webpack
-    //     if (source.includes('node_modules') || source.includes('webpack')) return
-
-    //     // remove all ../ from the source
-    //     var fileName = source.replace(/\.\.\//g, '')
-    //     files.push({ file: fileName, content: sourcesContent[index] })
-    //   })
-    // })
     for (let i = 0; i < sourceMaps.length; i++) {
       const content = JSON.parse(sourceMaps[i])
       const sources = content.sources
@@ -59,28 +47,6 @@ export default function Home() {
     // this will contains the source code and the file name
     // {file: 'File name', content: 'File content'}
     const files = parseFilesFromSourceMap(sourceCode)
-
-    // sourceCode.forEach((content, index) => {
-    //   // check if the content is a source map
-    //   if (!content.sources) return
-
-    //   // content is mapping file which contains
-    //   // sources -> array of source files
-    //   // sourcesContent -> array of source files content
-    //   const sources = content.sources
-    //   const sourcesContent = content.sourcesContent
-
-    //   sources.forEach((source, index) => {
-    //     // ignores node_modules or webpac
-    //     if (source.includes('node_modules') || source.includes('webpack')) return
-
-    //     // remove all ../ from the source
-    //     var fileName = source.replace(/\.\.\//g, '')
-    //     // files[fileName] = sourcesContent[index]
-    //     files.push({ file: fileName, content: sourcesContent[index] })
-    //   })
-    // })
-
 
     // log all file names
     console.log(`Got ${Object.keys(files).length} files`)
@@ -172,8 +138,22 @@ export default function Home() {
     setLoading(false)
   }
 
+  console.log('userAgreement', userAgreement, userAgreement === false)
+
+  useEffect(() => {
+    // get user agreement from local storage
+    const userAgreement = localStorage.getItem('userAgreement')
+    if (userAgreement === 'true') {
+      setUserAgreement(true)
+    }
+  }, [])
+
+
   return (
     <>
+      {
+        userAgreement === false ? (<TermOfService userAgreement={userAgreement} setUserAgreement={setUserAgreement} />) : null
+      }
       <Navbar />
       <div className="container mx-auto my-4">
         <h1 className="text-4xl font-bold text-center text-cyan-600">
@@ -195,6 +175,14 @@ export default function Home() {
         </div>
         <HelpText />
       </div>
+      {/* Footer */}
+      <footer className="bg-white dark:bg-gray-800">
+        <div className="container mx-auto py-8">
+          <p className="text-center text-gray-500 dark:text-gray-300">
+            &copy; {new Date().getFullYear()} Source Mapper. All rights reserved. Made with ❤️ by <a href="https://chapimenge.com" target="_blank" className="text-cyan-600">Chapi Menge</a>
+          </p>
+        </div>
+      </footer>
     </>
   );
 }

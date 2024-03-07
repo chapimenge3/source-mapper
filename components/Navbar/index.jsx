@@ -5,28 +5,32 @@ export default function Navbar() {
   return (
     <header className="flex items-center justify-between px-4 py-6 bg-white shadow">
       <Link className="text-xl font-bold tracking-wider text-gray-900 dark:text-gray-100" href="#">
-        <FlagIcon className="h-6 w-6" />
         <span className="sr-only">Logo</span>
       </Link>
       <nav className="space-x-4">
         <Button className="shadow" variant="outline">
-          <Link className="text-gray-700 dark:text-gray-300" href="#">
+          <Link className="text-gray-700 dark:text-gray-300" href="https://chapimenge.com">
             Home
           </Link>
         </Button>
         <Button className="shadow" variant="outline">
-          <Link className="text-gray-700 dark:text-gray-300" href="#">
+          <Link className="text-gray-700 dark:text-gray-300" href="https://chapimenge.com/#service">
             Services
           </Link>
         </Button>
         <Button className="shadow" variant="outline">
-          <Link className="text-gray-700 dark:text-gray-300" href="#">
-            About
+          <Link className="text-gray-700 dark:text-gray-300" href="https://blog.chapimenge.com/">
+            Blog
           </Link>
         </Button>
         <Button className="shadow" variant="outline">
-          <Link className="text-gray-700 dark:text-gray-300" href="#">
+          <Link className="text-gray-700 dark:text-gray-300" href="https://chapimenge.com/#contact">
             Contact
+          </Link>
+        </Button>
+        <Button className="shadow" variant="outline">
+          <Link className="text-gray-700 dark:text-gray-300" href="https://chapimenge.com/#contact">
+            Terms of Service
           </Link>
         </Button>
       </nav>
