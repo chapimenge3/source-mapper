@@ -53,6 +53,15 @@ export default function Home() {
   }
 
   const handleGenerateSourceCode = async () => {
+    if (!input) {
+      toast({
+        title: "No input",
+        description: "Please provide an input",
+        status: "error",
+      })
+
+      return
+    }
     setLoading(true)
     console.log('Generating source code')
     const allSourceMaps = await getAllSourceMaps(input)
