@@ -42,8 +42,7 @@ export default function Home() {
 
     return files
   }
-
-  async function generateFileFromSourceMap(urls) {
+  const generateFileFromSourceMap = async (urls) => {
     const sourceCode = await Promise.all(urls.map(async (url) => {
       const content = JSON.parse(await getWebPageContent(url))
       return content
